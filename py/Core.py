@@ -35,17 +35,11 @@ def GaussLattice(x,y,X,Y,s=1):
     return np.sum(explat, axis=(0,1))
 
 def define_peak_variables(signal):
-    # caller_frame = inspect.currentframe().f_back
-
+    ''' Define the peak of peaks and trough of troughs for further range calculation'''
     peaklocs, _ = sp.signal.find_peaks(signal)
     peaklocs2, _ = sp.signal.find_peaks(signal[peaklocs])
     troughlocs, _ = sp.signal.find_peaks(-signal)
     troughlocs2, _ = sp.signal.find_peaks(-signal[troughlocs])
-
-    # caller_frame.f_locals['peaklocs'] = peaklocs
-    # caller_frame.f_locals['peaklocs2'] = peaklocs2
-    # caller_frame.f_locals['troughlocs'] = troughlocs
-    # caller_frame.f_locals['troughlocs2'] = troughlocs2
     return peaklocs, peaklocs2, troughlocs, troughlocs2
 
 def show_theta_var(t=0,dt=0,ax=0, conv=False, verbose=True):
