@@ -7,7 +7,7 @@ from itertools import product
 
 N = 30
 R = 20
-num_points = 500
+num_points = 400
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
     '''Return an array of x coordinates and y coordinates that create a hexagonal lattice
@@ -41,6 +41,22 @@ def define_peak_variables(signal):
     troughlocs, _ = sp.signal.find_peaks(-signal)
     troughlocs2, _ = sp.signal.find_peaks(-signal[troughlocs])
     return peaklocs, peaklocs2, troughlocs, troughlocs2
+
+def theta_var_data(t=0,dt=0):
+    r = np.linspace(-R,R,num_points)
+    theta = np.radians(t)
+    x = r*np.cos(theta)
+    y = r*np.sin(theta)
+
+    X1,Y1 = Lattice(l=1,t0=0,N=N)
+    X2,Y2 = Lattice(l=1,t0=-dt,N=N)
+
+    Z1 = GaussLattice(x,y,X1,Y1,s=0.2)
+    Z2 = GaussLattice(x,y,X2,Y2,s=0.2)
+    signal = Z2-Z1
+    peaklocs, peaklocs2, troughlocs, troughlocs2 = define_peak_variables(signal)
+    
+    return r[peaklocs][peaklocs2], r[troughlocs][troughlocs2]
 
 def show_theta_var(t=0,dt=0,ax=0, conv=False, verbose=True):
     '''Plots the variation of grid response along the theta=t angle when 
@@ -76,7 +92,7 @@ def show_theta_var(t=0,dt=0,ax=0, conv=False, verbose=True):
         ax.plot(r,signal)
         ax.scatter(r[peaklocs][peaklocs2], signal[peaklocs][peaklocs2], color='r')
         ax.scatter(r[troughlocs][troughlocs2], signal[troughlocs][troughlocs2], color='g')
-        ax.set_title(r"along $\theta=$" +f"{t}" +r"$^\circ$ with $\Delta\theta=$" +f"{dt}" +r"$^\circ$")
+        ax.set_title(r"along $\theta=$" +f"{t:.2f}" +r"$^\circ$ with $\Delta\theta=$" +f"{dt:.2f}" +r"$^\circ$")
     else:
         plt.plot(r,signal)
         plt.scatter(r[peaklocs][peaklocs2], signal[peaklocs][peaklocs2], color='r')
@@ -105,10 +121,10 @@ def show_dist_var(t=0,dl=0,ax=0, conv=False, verbose=True):
         signal_conv = sp.ndimage.gaussian_filter(signal,sigma=8)
         if ax!=0:
             ax.plot(r,signal_conv)
-            ax.set_title(r"along $\theta=$" +f"{t}" +r"$^\circ$at $\Delta\theta=$" +f"{dt}" +r"$^\circ$")
+            ax.set_title(r"along $\theta=$" +f"{t}" +r"$^\circ$at $\Delta\lamda=$" +f"{dl}")
         else:
             plt.plot(r,signal_conv)
-            plt.title(r"Smooth Diff of activity along $\theta=$" +f"{t}" +r"$^\circ$at $\Delta\theta=$" +f"{dt}" +r"$^\circ$")
+            plt.title(r"Smooth Diff of activity along $\theta=$" +f"{t}" +r"$^\circ$at $\Delta\lambda=$" +f"{dl}")
         return r[peaklocs][peaklocs2], r[troughlocs][troughlocs2]
 
     if verbose:
@@ -127,11 +143,11 @@ def show_dist_var(t=0,dl=0,ax=0, conv=False, verbose=True):
         plt.title(r"along $\theta=$" +f"{t}" +r"$^\circ$ with $\Delta\lambda=$" +f"{dl}")
     return r[peaklocs][peaklocs2], r[troughlocs][troughlocs2]
 
-def range_theta_data(ts=[0], dts=[0], ax=0):
+def range_theta_data(ts=[0], dts=[0]):
     ranges = np.zeros((len(ts), len(dts), 2))
     # for i,t in tqdm(enumerate(ts), total=len(ts)):
     for i,j in tqdm(product(range(len(ts)), range(len(dts))), total=len(ts)*len(dts), leave=False):
-        peaks, troughs = show_theta_var(ts[i], dts[j], ax[i,j], verbose=False)
+        peaks, troughs = theta_var_data(ts[i], dts[j])
         if len(peaks[peaks>0.1]) != 0:
             ranges[i,j,0] = peaks[peaks>0.1][0]
         if len(troughs[troughs>0.1]) != 0:
@@ -155,7 +171,7 @@ def range_theta_fullpage():
         # plt.xlabel('dt / diff of angle')
         # plt.ylabel("range")
         # plt.show()
-        ax.set_title(f"Theta={ts[i]} deg")
+        ax.set_title(f"Theta={ts[i]:.2f} deg")
         ax.plot(dts,range_theta_dat[i,:,0], color='r', label='Peak Range')
         ax.plot(dts,range_theta_dat[i,:,1], color='g', label='Trough Range')
         ax.set_xlabel('Diff of angle/ dt')
@@ -166,26 +182,86 @@ def range_theta_fullpage():
     plt.show()
 
 def range_theta_animator(t):
-    dts = np.linspace(0,20,50)
-    range_theta_dat = range_theta_data([t], dts, ax)
-    ax.set_title(f"Theta={t} deg")
-    line1.set_data( dts, range_theta_dat[0,:,0] )
-    line2.set_data( dts, range_theta_dat[0,:,1] )
-    return line1, line2
+    ax.set_title(f"Theta={ts[t]} deg")
+    # print(dts, range_theta_dat[0,:,0])
+    # plt.plot( dts, range_theta_dat[0,:,0] )
+    while len(plots)!=0:
+        plot = plots.pop()
+        # print(plot)
+        plot[0].remove()
+
+    plots.append( ax.plot( dts, range_theta_dat[t,:,0], color='r', label='Peak Range' ) )
+    plots.append( ax.plot( dts, range_theta_dat[t,:,1], color='g', label='Trough Range' ) )
+    plt.legend()
+
+def single_theta_variation_animator(t):
+    ax.clear()
+    ax.set_title(f"Theta={ts[0]}, dt={dts[t]} deg")
+    ax.set_ylim(-1,1)
+    show_theta_var(t=ts[0],dt=dts[t],ax=ax, conv=False, verbose=False)
+
+def fullpage_theta_variation_animator(t):
+    for i, ax in enumerate(axs.flatten()):
+        ax.clear()
+        ax.set_ylim(-1,1)
+        show_theta_var(t=ts[i],dt=dts[t],ax=ax, conv=False, verbose=False)
 
 if __name__ == "__main__":
-    fig, ax = plt.subplots(1)
-    line1, = ax.plot([], [])
-    line2, = ax.plot([], [])
-    ax.set_xlabel('Diff of angle/ dt')
-    ax.set_ylabel("Range")
+    # For fullpage_theta_variation_animator
+    plots = []
+    num = 100
+    ts = np.linspace(0,55,12)
+    dts = np.linspace(1,10,num)
+    fig, axs = plt.subplots(len(ts)//4, 4, figsize=(19.2, 10.8))
+    fig.set_tight_layout(True)
 
-    anim = FuncAnimation(fig, range_theta_animator,  
-                               frames = 5, interval = 5)  
+    range_theta_dat = range_theta_data(ts, dts)
+
+    anim = FuncAnimation(fig, fullpage_theta_variation_animator,  
+                               frames = num, interval = 200)  
    
     # saves the animation in our desktop 
-    # anim.save('growingCoil.mp4', writer = 'ffmpeg', fps = 30) 
-    plt.show()
-    
+    # plt.show()
+    anim.save('fullpage.mkv', writer='ffmpeg') 
 
+# if __name__ == "__main__":
+#     # For single theta_variation_animator
+#     plots = []
+#     fig = plt.figure()
+#     ax = fig.add_subplot(1,1,1)
+
+#     num = 500
+#     ts = [45]
+#     dts = np.linspace(0,20,num)
+#     range_theta_dat = range_theta_data(ts, dts)
+
+#     anim = FuncAnimation(fig, single_theta_variation_animator,  
+#                                frames = num, interval = 200)  
+   
+#     # saves the animation in our desktop 
+#     # plt.show()
+#     anim.save('45.mp4', writer='ffmpeg') 
+
+# if __name__ == "__main__":
+#     # For range_theta_animator
+#     plots = []
+#     fig = plt.figure()
+#     ax = fig.add_subplot(1,1,1)
+#     ax.set_xlabel('Diff of angle/ dt')
+#     ax.set_ylabel("Range")
+
+#     num = 500
+#     ts = np.linspace(0,10,num)
+#     dts = np.linspace(0,20,100)
+#     range_theta_dat = range_theta_data(ts, dts)
+
+#     anim = FuncAnimation(fig, range_theta_animator,  
+#                                frames = num, interval = 200)  
+   
+#     # saves the animation in our desktop 
+#     # plt.show()
+#     anim.save('5.mp4', writer='ffmpeg') 
+    
+# if __name__ == "__main__":
+#     range_theta_fullpage()
 
