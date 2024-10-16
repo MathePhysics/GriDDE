@@ -22,17 +22,17 @@ def Lattice(l=1,l0=[0,0],t0=0,N=3):
     theta = np.radians(t0)
     c, s = np.cos(theta), np.sin(theta)
     R = np.array(((c, -s), (s, c)))
-    a,b = R@a0 + l0[0], R@b0 + l0[1]
-    X = a[0]*m + b[0]*n
-    Y = a[1]*m + b[1]*n
+    a,b = R@a0 , R@b0 
+    X = a[0]*m + b[0]*n + l0[0]
+    Y = a[1]*m + b[1]*n + l0[1]
     return X,Y
 
 def GaussLattice(x,y,X,Y,s=1):
     ''' A function with periodic Gaussians centered at X,Y lattice'''
-    exponent = (np.subtract.outer(X,x))**2  + (np.subtract.outer(Y,y))**2
+    exponent = (np.subtract.outer(x,X))**2  + (np.subtract.outer(y,Y))**2
     # print(exponent.shape)
     explat = np.exp(exponent / (-2*(s**2)))     # lattice of exponentials
-    return np.sum(explat, axis=(0,1))
+    return np.sum(explat, axis=(-2,-1))
 
 def define_peak_variables(signal):
     ''' Define the peak of peaks and trough of troughs for further range calculation'''
