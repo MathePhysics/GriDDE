@@ -15,7 +15,7 @@ oriStd = 10                         # Std for sampling grid orientation
 gridSpacing = 1                     # Mean spacing of grid cells (in meters)    
 spacingStd = 0.2                    # Std for sampling grid spacing
 arenaSize = 1                       # Size of arena (in meters)       
-nNeurons = 2                        # Sizes of populations of grid cells to be tested
+nNeurons = 32                        # Sizes of populations of grid cells to be tested
 # nSamples = 2                      # Number of independent populations to test per size
 # nDecoding = 10                    # Number of random spiking vectors to draw per position
 # gridFiring_max_mean = 13          # Mean max firing rate for idealized model
@@ -31,17 +31,19 @@ params = list(zip(spacings, phases, orientations))
 Xs, Ys = [], []
 for param in params:
     X,Y = Lattice(*param, N=10)
-    plt.scatter(X, Y)
-    plt.title("The distributed lattice points")
+    # plt.scatter(X, Y)
+    # plt.title("The distributed lattice points")
     Xs.append(X) 
     Ys.append(Y)
-plt.show()
+# plt.clf()
+# plt.show()
 # Xs = np.stack(Xs)
 # Ys = np.stack(Ys)
 # x = np.array([0,1])
 # print(GaussLattice(x,x,Xs,Ys))
 
 def corralong_dir(t=0):
+    
     r = np.linspace(-R,R,num_points)
     theta = np.radians(t)
     x = r*np.cos(theta)
@@ -52,9 +54,13 @@ def corralong_dir(t=0):
     corr_activity = np.sqrt(activity@activity_init/nNeurons)
     # print((activity@activity_init).shape)
     plt.plot(r,corr_activity )
-    plt.title(f"Correlation along theta = {t} deg direction")
+    plt.title(r"Correlation along $\theta$ = " +f"{t} , n = {nNeurons}")
     plt.xlabel("Distance")
     plt.ylabel("Correlation")
-    plt.show()
+    plt.ylim((0,10))
+    plt.savefig(f"Results/plot_cases2/n{nNeurons}_theta{t}.png")
+    plt.close()
 
-corralong_dir(45)
+angles = list(10*i for i in range(0,18))
+for angle in angles:
+    corralong_dir(angle)

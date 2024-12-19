@@ -3,7 +3,7 @@ import numpy as np
 from Core import Lattice, GaussLattice
 
 ARENA_SIZE = 1 # size of arena (in meters)
-R = 1 # maximum distance for correlation 
+R = 40 # maximum distance for correlation 
 N_POINTS = 100 # number of points along the line
 NEURON_COUNTS = [16, 32, 64] # different numbers of grid cells to simulate
 M = 4 # number of modules for case 3
