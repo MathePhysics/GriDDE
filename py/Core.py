@@ -5,8 +5,8 @@ import scipy as sp
 from tqdm import tqdm
 from itertools import product
 
-N = 30
-R = 20
+N = 50
+R = 40
 num_points = 400
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
