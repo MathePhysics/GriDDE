@@ -5,9 +5,9 @@ import scipy as sp
 from tqdm import tqdm
 from itertools import product
 
-N = 50
-R = 40
-num_points = 400
+N = 10
+R = 3
+num_points = 100
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
     '''Return an array of x coordinates and y coordinates that create a hexagonal lattice
@@ -21,8 +21,8 @@ def Lattice(l=1,l0=[0,0],t0=0,N=3):
     # apply rotation
     theta = np.radians(t0)
     c, s = np.cos(theta), np.sin(theta)
-    R = np.array(((c, -s), (s, c)))
-    a,b = R@a0 , R@b0 
+    Rot = np.array(((c, -s), (s, c)))
+    a,b = Rot@a0 , Rot@b0 
     X = a[0]*m + b[0]*n + l0[0]
     Y = a[1]*m + b[1]*n + l0[1]
     return X,Y
