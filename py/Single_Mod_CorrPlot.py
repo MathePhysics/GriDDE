@@ -1,14 +1,13 @@
+"""
+This module is designed to simulate and analyze the correlation of grid cell activity in a SINGLE MODULE.
+written by @Pritipriya_dasbehera
+"""
+
 import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_agg import FigureCanvasAgg
-# from matplotlib.figure import Figure
-# from matplotlib.animation import FuncAnimation  
 import numpy as np
-import scipy as sp
-from tqdm import tqdm
-from itertools import product
 from Core import *
 
-# Defined in module Core, change both here and there for appropriate effect
+# Defined in module Core.py, change both here and there for appropriate effect
 N = 10
 R = 3
 num_points = 100
@@ -21,13 +20,8 @@ spacingStd = 0                      # Std for sampling grid spacing
 arenaSize = 1                       # Size of arena (in meters)       
 gausswidth = 0.3                    # Width of the gaussian used for each cell
 nNeurons = 32                       # Sizes of populations of grid cells to be tested
-# nSamples =                       # Number of independent populations to test per size
-# nDecoding = 10                    # Number of random spiking vectors to draw per position
-# gridFiring_max_mean = 13          # Mean max firing rate for idealized model
-# gridFiring_max_std = 8            # Std for max firing rate
-nModules = 4                        # Number of modules 
 
-configstr = f"gridOrientation:{gridOrientation}, oriStd:{oriStd}, gridSpacing:{gridSpacing}, spacingStd:{spacingStd}, arenaSize:{arenaSize}, gausswidth:{gausswidth}, nModules:{nModules} "
+configstr = f"gridOrientation:{gridOrientation}, oriStd:{oriStd}, gridSpacing:{gridSpacing}, spacingStd:{spacingStd}, arenaSize:{arenaSize}, gausswidth:{gausswidth}"
 meta = { "GRIDCONFIG": configstr }
 print(meta)
 
@@ -64,11 +58,7 @@ def multicorr_fig(axs: list[plt.Axes], oriStd = oriStd, spacingStd=spacingStd, g
         y = r*np.sin(theta)
         activity_init = GaussLattice(0, 0, Xs, Ys, gausswidth)
         activity = GaussLattice(x, y, Xs, Ys, gausswidth)
-        # print(activity_init)
-        # print("------------")
-        # print(activity)
-        # return
-        dot_product = np.dot(activity, activity_init)  # Shape (400,)
+        dot_product = np.dot(activity, activity_init)  
         norm_activity_init = np.linalg.norm(activity_init)
         norm_activity = np.linalg.norm(activity, axis = 1)
         corr_activity = dot_product/ (norm_activity_init * norm_activity)

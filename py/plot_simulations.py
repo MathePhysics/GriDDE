@@ -1,3 +1,8 @@
+"""
+This module is designed to simulate and analyze the correlation of grid cell activity in a SINGLE MODULE. 
+written by @Aarush_Gupta
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from Core import Lattice, GaussLattice
