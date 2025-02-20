@@ -1,5 +1,6 @@
 """
-This module is for plotting of the figures for the paper.
+Second iteration of the module for plotting of the figures for the paper.
+Instead of a continuos curve we'll scatter plot.
 written by @Pritipriya_dasbehera
 """
 
@@ -10,14 +11,14 @@ from Core import *
 # Defined in module Core.py, change both here and there for appropriate effect
 N = 100
 R = 10
-num_points = 200
+num_points = 2*R + 1
 
 # Globals 
 arenaSize = 1                       # Size of arena (in meters)       
 gausswidth = 0.2                    # Width of the gaussian used for each cell
 
 nNeurons = [32, 64, 256]                        # To be used in each subplot (length = number of plotlines in each subplot)
-plotOrientations = [0, 15, 30]                  # Mean orientation of grid cells for each plot 
+plotOrientations = [0, 15, 30]                      # Mean orientation of grid cells for each plot 
                                                 # length of this = number of plots
 nFigs = len(plotOrientations)                   # Number of plots
 
@@ -31,7 +32,30 @@ oriStds = [2, 0, 0]                             # Std for sampling grid orientat
 nSubplots = len(nModules)                       # Number of subplots
 
 def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=nModules, gridSpacing=gridSpacing, spacingStds=spacingStds):
-    ''' Plotting the figure for the paper'''
+    """
+    Plots figures for the paper based on the provided parameters.
+    Parameters:
+    -----------
+    nNeurons : list of int
+        List of neuron counts to be used in the plots.
+    plotOrientations : list of float
+        List of orientations (in degrees) to be used for plotting.
+    nModules : list of int
+        List of module counts for each subplot.
+    gridSpacing : list of float or list of lists of float
+        List of grid spacings or list of lists of grid spacings for each module.
+    spacingStds : list of float
+        List of standard deviations for grid spacings.
+    Returns:
+    --------
+    None
+        The function saves the generated plots as PNG and SVG files in the "./Results/" directory.
+    Notes:
+    ------
+    - The function generates subplots for each combination of neuron count and module configuration.
+    - Each subplot shows the correlation of activity along a specified direction.
+    - The plots are saved with filenames indicating the orientation used.
+    """
 
     Figs, Axs = [],[]
     for _ in range(nFigs):
@@ -79,7 +103,7 @@ def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=n
                 norm_activity = np.linalg.norm(activity, axis = 1)
                 corr_activity = dot_product/ (norm_activity_init * norm_activity)
                 
-                ax.plot(r, corr_activity, label=f"n = {nNeuron}", linewidth=2)
+                ax.scatter(r, corr_activity, label=f"n = {nNeuron}", linewidth=2)
                 ax.set_title(f"{nModule} modules: " + r"$\Delta \theta$" + f" = {oriStd}" + r"$^{\circ}$, $\Delta \lambda$" + f" = {spacingStd}")
                 ax.set_ylim((0,1.1))
 
@@ -111,8 +135,8 @@ def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=n
     for i, fig in enumerate(Figs):
         fig.suptitle(f"Orientation = {plotOrientations[i]}", y=0.95)
         fig.tight_layout(rect=[0, 0, 1, 0.95])
-        fig.savefig(f"./Results/Ori_{plotOrientations[i]}.png")
-        fig.savefig(f"./Results/Ori_{plotOrientations[i]}.svg")
+        fig.savefig(f"./Results/Ori_{plotOrientations[i]}_scatter.png")
+        fig.savefig(f"./Results/Ori_{plotOrientations[i]}_scatter.svg")
 
 if __name__ == "__main__":
     fig_plotter()

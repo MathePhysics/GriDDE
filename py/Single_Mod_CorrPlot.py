@@ -26,7 +26,24 @@ meta = { "GRIDCONFIG": configstr }
 print(meta)
 
 def multicorr_fig(axs: list[plt.Axes], oriStd = oriStd, spacingStd=spacingStd, gausswidth=gausswidth, nNeurons=nNeurons):
-    ''' Multicell correlation plot generator for single module'''
+    """
+    Generates a multicell correlation plot for a single module.
+    Parameters:
+    -----------
+    axs : list of plt.Axes
+        List of matplotlib axes objects where the correlation plots will be drawn.
+    oriStd : float
+        Standard deviation for the normal distribution of grid orientations.
+    spacingStd : float
+        Standard deviation for the normal distribution of grid spacings.
+    gausswidth : float
+        Width of the Gaussian function used in the lattice generation.
+    nNeurons : int
+        Number of neurons to simulate.
+    Returns:
+    --------
+    None
+    """
 
     orientations = np.random.normal(gridOrientation, oriStd, nNeurons)
     spacings = np.random.normal(gridSpacing, spacingStd, nNeurons)

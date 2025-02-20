@@ -5,9 +5,15 @@ import scipy as sp
 from tqdm import tqdm
 from itertools import product
 
-N = 10
-R = 3
-num_points = 100
+# Settings for continuos plots (old)
+# N = 10
+# R = 3
+# num_points = 100
+
+# Settings for scatter plots (new)
+N = 300
+R = 10
+num_points = 2*R + 1
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
     '''Return an array of x coordinates and y coordinates that create a hexagonal lattice
