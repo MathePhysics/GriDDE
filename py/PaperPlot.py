@@ -5,29 +5,30 @@ written by @Pritipriya_dasbehera
 
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
 from Core import *
 
 # Defined in module Core.py, change both here and there for appropriate effect
-N = 100
-R = 10
-num_points = 200
+# N = 20
+# R = 10
+# num_points = 100                    # numper of points taken for sampling
 
 # Globals 
-arenaSize = 1                       # Size of arena (in meters)       
-gausswidth = 0.2                    # Width of the gaussian used for each cell
+arenaSize = 1                       # Size of arena (in meters)
+gausswidth = 0.16                    # Width of the gaussian used for each cell
 
-nNeurons = [32, 64, 256]                        # To be used in each subplot (length = number of plotlines in each subplot)
+nNeurons = [128]                        # To be used in each subplot (length = number of plotlines in each subplot)
 plotOrientations = [0, 15, 30]                  # Mean orientation of grid cells for each plot 
                                                 # length of this = number of plots
 nFigs = len(plotOrientations)                   # Number of plots
 
-nModules = [1, 1, 3]                            # nModule for the 3 subplots
-gridSpacing = [1, 1, [0.71,1,1.41]]             # Mean spacing of grid cells for each module in the subplots
-gridOrientation = [0, 0, [0,0,0]]               # Mean orientation of grid cells for each module in the subplots
+nModules = [1, 3, 1]                            # nModule for the 3 subplots
+gridSpacing = [1, [0.71,1,1.41], 1]             # Mean spacing of grid cells for each module in the subplots
+gridOrientation = [0, [0,0,0], 0]               # Mean orientation of grid cells for each module in the subplots
                                                 # Nested list for multimodule
 
-spacingStds = [0.05, 0, 0]                      # Std for sampling grid spacing for the 3 subplots
-oriStds = [2, 0, 0]                             # Std for sampling grid orientations for the 3 subplots
+spacingStds = [0, 0, 0.05]                      # Std for sampling grid spacing for the 3 subplots
+oriStds = [0, 0, 0]                             # Std for sampling grid orientations for the 3 subplots
 nSubplots = len(nModules)                       # Number of subplots
 
 def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=nModules, gridSpacing=gridSpacing, spacingStds=spacingStds):
@@ -39,7 +40,7 @@ def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=n
         Figs.append(fig)
         Axs.append(axs)
 
-    for i_subplot in range(nSubplots):
+    for i_subplot in tqdm(range(nSubplots)):
         nModule = nModules[i_subplot]
         spacingStd = spacingStds[i_subplot]
         oriStd = oriStds[i_subplot]
@@ -112,7 +113,7 @@ def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=n
         fig.suptitle(f"Orientation = {plotOrientations[i]}", y=0.95)
         fig.tight_layout(rect=[0, 0, 1, 0.95])
         fig.savefig(f"./Results/Ori_{plotOrientations[i]}.png")
-        fig.savefig(f"./Results/Ori_{plotOrientations[i]}.svg")
+        # fig.savefig(f"./Results/Ori_{plotOrientations[i]}.svg")
 
 if __name__ == "__main__":
     fig_plotter()

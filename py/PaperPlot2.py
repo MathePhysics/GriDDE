@@ -9,9 +9,9 @@ import numpy as np
 from Core import *
 
 # Defined in module Core.py, change both here and there for appropriate effect
-N = 100
-R = 10
-num_points = 2*R + 1
+# N = 100
+# R = 10
+# num_points = 2*R + 1
 
 # Globals 
 arenaSize = 1                       # Size of arena (in meters)       

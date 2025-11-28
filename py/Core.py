@@ -1,3 +1,8 @@
+################################################################################
+## The code defines the basic functions used by other files.                  ##
+## Written by P.D.                                                            ##
+################################################################################
+
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation  
 import numpy as np
@@ -5,15 +10,17 @@ import scipy as sp
 from tqdm import tqdm
 from itertools import product
 
+np.random.seed(42)
+
 # Settings for continuos plots (old)
-# N = 10
-# R = 3
+# N = 20
+# R = 10
 # num_points = 100
 
 # Settings for scatter plots (new)
-N = 300
-R = 10
-num_points = 2*R + 1
+# N = 20
+# R = 10
+# num_points = 11
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
     '''Return an array of x coordinates and y coordinates that create a hexagonal lattice

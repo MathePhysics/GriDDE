@@ -10,7 +10,7 @@ from Core import *
 # Defined in module Core.py, change both here and there for appropriate effect
 N = 10
 R = 3
-num_points = 100
+num_points = 10
 
 # Globals
 gridOrientation = 0                 # Mean orientation of grid cells (in degrees)
@@ -135,8 +135,8 @@ def multicorr_plotter():
         print(centerpos)
         fig.text( centerpos, pos.y1 + 0.03, r"$\theta$ = " +f"{angles[i]}", ha='center', va='center', fontsize=14, fontweight='bold')
 
-    plt.savefig(f"Results/multicell_correlation_n_{nNeurons}_ori_{oriStd}.png")
-    # plt.show()
+    # plt.savefig(f"Results/multicell_correlation_n_{nNeurons}_ori_{oriStd}.png")
+    plt.show()
 
 
 multicorr_plotter()
