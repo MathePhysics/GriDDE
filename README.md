@@ -1,4 +1,4 @@
-# Grid Cell Activity Simulation and Analysis
+# Grid cell Decorrelation for Distance Encoding (GRIDDE)
 
 This repository contains code for simulating and analyzing the correlation of grid cell (across single or multiple module) activity in various configurations [different levels (or absence of) variation in orientation, spacing and phase].
 
