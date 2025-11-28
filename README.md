@@ -11,5 +11,5 @@ This repository contains code for simulating and analyzing the correlation of gr
   - `Core.py`: Core functions and classes used across the project.
   - `Single_Mod_CorrPlot.py`: Script for plotting correlation of grid cell activity in a single module.
   - `Multi_Mod_CorrPlot.py`: Script for plotting correlation of grid cell activity in multiple modules.
-  - `PaperPlot.py`: Script for generating line plots for the paper (Line plots).
-  - `PaperPlot2.py`: Second iteration of the plotting script for the paper (Scatter plot).
+  - `PaperPlot.py`: Script for generating line plots.
+  - `PaperPlot2.py`: Second iteration of the plotting script (Scatter plot).
