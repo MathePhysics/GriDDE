@@ -1,7 +1,7 @@
 # Grid cell Decorrelation for Distance Encoding (GRIDDE)
 
 This repository contains code for simulating and analyzing the (De-)correlation of grid cell activity based on the following article:\
-["P. Dasbehera, A. S. Dogra and W. T. Redman, Distance by de-correlation: Computing distance with heterogeneous grid cells"](https://arxiv.org/abs/2511.08292)
+["P. Dasbehera, A. S. Dogra, and W. T. Redman, Distance by de-correlation: Computing distance with heterogeneous grid cells"](https://arxiv.org/abs/2511.08292)
 
 
 ## Files and Directories
