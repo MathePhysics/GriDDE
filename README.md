@@ -1,6 +1,8 @@
 # Grid cell Decorrelation for Distance Encoding (GRIDDE)
 
-This repository contains code for simulating and analyzing the correlation of grid cell (across single or multiple module) activity in various configurations [different levels (or absence of) variation in orientation, spacing and phase].
+This repository contains code for simulating and analyzing the (De-)correlation of grid cell activity based on the following article [(arXiv)](https://arxiv.org/abs/2511.08292):\
+Distance by de-correlation: Computing distance with heterogeneous grid cells \
+Pritipriya Dasbehera, Akshunna S. Dogra and William T. Redman
 
 ## Files and Directories
 
@@ -11,5 +13,6 @@ This repository contains code for simulating and analyzing the correlation of gr
   - `Core.py`: Core functions and classes used across the project.
   - `Single_Mod_CorrPlot.py`: Script for plotting correlation of grid cell activity in a single module.
   - `Multi_Mod_CorrPlot.py`: Script for plotting correlation of grid cell activity in multiple modules.
-  - `PaperPlot.py`: Script for generating line plots.
-  - `PaperPlot2.py`: Second iteration of the plotting script (Scatter plot).
+  - `PaperPlot.py`: Script for generating line plots. (v2 generalises to many neuron counts)
+  - `PaperPlot2.py`: Second iteration of the plotting script (Scatter plot). (v2 generalises to many neuron counts)
+- **theoretical_plots/powerspectrum.jl**: Contains Julia code to verify the theoretical arguments for 1D case presented in the paper.

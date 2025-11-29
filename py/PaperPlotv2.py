@@ -1,8 +1,3 @@
-"""
-This module is for plotting of the figures for the paper.
-written by @Pritipriya_dasbehera
-"""
-
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
@@ -34,7 +29,30 @@ nSubplots = len(nModules)                       # Number of subplots
 # cmap = cm.get_cmap('viridis')
 
 def fig_plotter(nNeuron=nNeuron, plotOrientations=plotOrientations, nModules=nModules, gridSpacing=gridSpacing, spacingStds=spacingStds):
-    ''' Plotting the figure for the paper'''
+    """
+    Plots figures based on the provided parameters.
+    Parameters:
+    -----------
+    nNeuron : int
+        Number of neurons to be used in the plots.
+    plotOrientations : list of float
+        List of orientations (in degrees) to be used for plotting.
+    nModules : list of int
+        List of module counts for each subplot.
+    gridSpacing : list of float or list of lists of float
+        List of grid spacings or list of lists of grid spacings for each module.
+    spacingStds : list of float
+        List of standard deviations for grid spacings.
+    Returns:
+    --------
+    None
+        The function saves the generated plots as PNG and SVG files in the "./Results/" directory.
+    Notes:
+    ------
+    - The function generates line plots for each combination of neuron count and module configuration.
+    - Each subplot shows the correlation of activity along a specified direction.
+    - The plots are saved with filenames indicating the orientation used.
+    """
 
     Figs, Axs = [],[]
     for _ in range(nFigs):

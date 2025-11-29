@@ -1,9 +1,3 @@
-"""
-Second iteration of the module for plotting of the figures for the paper.
-Instead of a continuos curve we'll scatter plot.
-written by @Pritipriya_dasbehera
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
 from Core import *
@@ -18,7 +12,7 @@ arenaSize = 1                       # Size of arena (in meters)
 gausswidth = 0.2                    # Width of the gaussian used for each cell
 
 nNeurons = [32, 64, 256]                        # To be used in each subplot (length = number of plotlines in each subplot)
-plotOrientations = [0, 15, 30]                      # Mean orientation of grid cells for each plot 
+plotOrientations = [0, 15, 30]                  # Mean orientation of grid cells for each plot 
                                                 # length of this = number of plots
 nFigs = len(plotOrientations)                   # Number of plots
 
@@ -33,7 +27,7 @@ nSubplots = len(nModules)                       # Number of subplots
 
 def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=nModules, gridSpacing=gridSpacing, spacingStds=spacingStds):
     """
-    Plots figures for the paper based on the provided parameters.
+    Plots figures based on the provided parameters.
     Parameters:
     -----------
     nNeurons : list of int
@@ -52,7 +46,7 @@ def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=n
         The function saves the generated plots as PNG and SVG files in the "./Results/" directory.
     Notes:
     ------
-    - The function generates subplots for each combination of neuron count and module configuration.
+    - The function generates scatter plots for each combination of neuron count and module configuration.
     - Each subplot shows the correlation of activity along a specified direction.
     - The plots are saved with filenames indicating the orientation used.
     """

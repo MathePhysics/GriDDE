@@ -12,15 +12,15 @@ from itertools import product
 
 np.random.seed(42)
 
-# Settings for continuos plots (old)
+# Settings for line plots
 # N = 20
 # R = 10
 # num_points = 100
 
-# Settings for scatter plots (new)
-# N = 20
-# R = 10
-# num_points = 11
+# Settings for scatter plots
+N = 20
+R = 10
+num_points = 11
 
 def Lattice(l=1,l0=[0,0],t0=0,N=3):
     '''Return an array of x coordinates and y coordinates that create a hexagonal lattice

@@ -1,8 +1,3 @@
-"""
-This module is for plotting of the figures for the paper.
-written by @Pritipriya_dasbehera
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
@@ -14,10 +9,10 @@ from Core import *
 # num_points = 100                    # numper of points taken for sampling
 
 # Globals 
-arenaSize = 1                       # Size of arena (in meters)
+arenaSize = 1                         # Size of arena (in meters)
 gausswidth = 0.16                    # Width of the gaussian used for each cell
 
-nNeurons = [128]                        # To be used in each subplot (length = number of plotlines in each subplot)
+nNeurons = [128]                                # To be used in each subplot (length = number of plotlines in each subplot)
 plotOrientations = [0, 15, 30]                  # Mean orientation of grid cells for each plot 
                                                 # length of this = number of plots
 nFigs = len(plotOrientations)                   # Number of plots
@@ -32,7 +27,30 @@ oriStds = [0, 0, 0]                             # Std for sampling grid orientat
 nSubplots = len(nModules)                       # Number of subplots
 
 def fig_plotter(nNeurons=nNeurons, plotOrientations=plotOrientations, nModules=nModules, gridSpacing=gridSpacing, spacingStds=spacingStds):
-    ''' Plotting the figure for the paper'''
+    """
+    Plots figures based on the provided parameters.
+    Parameters:
+    -----------
+    nNeurons : list of int
+        List of neuron counts to be used in the plots.
+    plotOrientations : list of float
+        List of orientations (in degrees) to be used for plotting.
+    nModules : list of int
+        List of module counts for each subplot.
+    gridSpacing : list of float or list of lists of float
+        List of grid spacings or list of lists of grid spacings for each module.
+    spacingStds : list of float
+        List of standard deviations for grid spacings.
+    Returns:
+    --------
+    None
+        The function saves the generated plots as PNG and SVG files in the "./Results/" directory.
+    Notes:
+    ------
+    - The function generates line plots for each combination of neuron count and module configuration.
+    - Each subplot shows the correlation of activity along a specified direction.
+    - The plots are saved with filenames indicating the orientation used.
+    """
 
     Figs, Axs = [],[]
     for _ in range(nFigs):

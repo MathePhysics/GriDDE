@@ -1,9 +1,3 @@
-"""
-Second iteration of the module for plotting of the figures for the paper.
-Instead of a continuos curve we'll scatter plot.
-written by @Pritipriya_dasbehera
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
 from Core import *
@@ -19,7 +13,7 @@ arenaSize = 1                       # Size of arena (in meters)
 gausswidth = 0.16                    # Width of the gaussian used for each cell
 
 nNeuron = 128                        # To be used in each subplot (length = number of plotlines in each subplot)
-plotOrientations = [0, 30]                  # Mean orientation of grid cells for each plot
+plotOrientations = [0, 30]                      # Mean orientation of grid cells for each plot
                                                 # length of this = number of plots
 nFigs = len(plotOrientations)                   # Number of plots
 
@@ -37,8 +31,8 @@ def fig_plotter(nNeuron=nNeuron, plotOrientations=plotOrientations, nModules=nMo
     Plots figures for the paper based on the provided parameters.
     Parameters:
     -----------
-    nNeurons : list of int
-        List of neuron counts to be used in the plots.
+    nNeuron : int
+        Number of neurons to be used in the plots.
     plotOrientations : list of float
         List of orientations (in degrees) to be used for plotting.
     nModules : list of int
@@ -92,9 +86,7 @@ def fig_plotter(nNeuron=nNeuron, plotOrientations=plotOrientations, nModules=nMo
             Ys.append(Y)
 
         def corralong_dir(ax, t=0):
-            # r = np.linspace(-R,R,num_points[i_subplot])
-            r = np.linspace(-8.7,8.7,num_points[i_subplot])
-            # r = np.linspace(-10,10,num_points[i_subplot])
+            r = np.linspace(-R,R,num_points[i_subplot])
             theta = np.radians(t)
             x = r*np.cos(theta)
             y = r*np.sin(theta)
